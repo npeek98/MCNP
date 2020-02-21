@@ -1,0 +1,36 @@
+NE350 IPR2 MCNP
+C Date: 17OCT19
+C Created by CDT Nathaniel Peek
+C This is a simple model of the radiation source and housing for a devices
+C designed to determine the level of water in a tank based on the how much
+C the water reduces the flux from the Cesium-137 source.
+C -----------------CELL CARD BLOCK--------------------------------------------
+1     0       -2          $Air inside shield
+2     1       -11.34 -1 2            $ Shield Cylinder
+3     2       -7.82 4 -3       $ Outside of container
+4     0       -4            $ Inside of container
+99    0      -99 #1 #2 #3 #4
+999   0       99            $ Graveyard
+
+C ---------------------------SURFACE CARD BLOCK-------------------------------
+1      rcc 0 200.2 0 0 30 0 12 $ Shielding cylinder- 30 cm high, 12 cm radius
+2      rcc 0 200.4 0 0 20 0 2 $ Internal of shield- 20 cm high, 2 cm radius
+3      rcc 0 0 0 0 199 0 100 $ Container- 200 cm high, 100 cm diameter
+4      rcc 0 2.54 0 0 194.92 0 99 $  Internal of container
+99     so 300  $Bounding sphere for graveyard
+
+C ------------------------------------DATA CARD BLOCK--------------------------
+MODE P
+SDEF POS= 0 219 0 ERG=0.662 PAR=2
+M1    82000.50c           -1.000000 $Lead
+M2    6000.70c            -0.006750 $Stainless Steel
+      14000.60c           -0.006500
+      15031.70c           -0.000260
+      16000.66c           -0.000200
+      24000.50c           -0.170000
+      25055.70c           -0.006500
+      26000.55c           -0.795050
+      42000.60c           -0.004880
+IMP:P 1 1 1 1 1 0
+NPS   1E5
+PRINT
