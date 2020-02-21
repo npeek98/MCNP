@@ -1,0 +1,48 @@
+NE361 IN-CLASS EXAMPLE UNIT CELL
+C Date
+C Made by: Nathaniel Peek
+C ------------------------------CELL CARD BLOCK--------------------------------
+C UO2 fuel rod:
+1     1 -10.2       -1
+C Helium gap:
+2     2 -0.000166   -2  1  
+C Zirconium cladding
+3     3 -6.407      -3  2
+C  Light water moderator
+4     4 -0.715      -4  3   
+C Cell 99 utside unit cell inside sphere FOR STOCHASTIC VOLUME
+99    0             -99 4  
+C Graveyard
+999   0                 99
+
+C ----------------------------SURFACE CARD BLOCK-------------------------------
+C Fuel cylinder- 0 0 320 is vector from defined base:
+1     RCC 0 0 -160   0 0 320   0.385 
+C Helium gap cylinder:
+2     RCC 0 0 -160.1 0 0 320.2 0.390                    
+C Zirconium cladding cylinder:
+3     RCC 0 0 -160.2 0 0 320.4 0.461  
+C RPP for moderator: (* denotes reflected boundry for kcode)
+*4    RPP -0.6555 0.6555 -0.6555 0.6555 -160.3 160.3
+C Bounding sphere for graveyard:
+99    SO  300
+
+C ------------------------------DATA CARD BLOCK--------------------------------
+MODE N
+VOL   1.490E+02               $ Volume of fuel rod
+      3.991E+00               $ Volume of helium gap
+      6.091E+01               $ Volume of zirconium gap
+      3.371E+02               $ Volume of moderator
+KCODE 2000 1.4 20 70 100 500
+KSRC  0 0 0                   $ There has to be fissile material here
+IMP:N 1 1 1 1 1 0             $ Tracks N for first 5 cells but not 6th 
+M1    92235.72C -0.039666     $ UO2 enriched to 4.5 w/o at 900K
+      92234.72C -0.004407     $ Density 10.2 g/cc
+      92238.72C -0.837395
+       8016.72C -0.118532
+M2     2004.71C 1             $ Helium gap at 600K. Density 0.000166 g/cc
+M3    40000.58C 1             $ Zirconium cladding at 597K. Density 6.407 g/cc
+M4     1001.71C 2             $ Water at 600K. Density 0.715 g/cc
+       8016.71C 1
+MT4    lwtr.16T               $ Light water treatment card
+PRINT
