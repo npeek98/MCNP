@@ -1,0 +1,51 @@
+NE361 Final Design Ex
+C Date: 05MAY19                                                               
+C Created by CDT Nathaniel Peek
+C This is a shipping container designed to shield from various radioactive 
+C sources. It is constructed of an inner hollow cylinder of borated aluminum
+C and an outer cylinder of Kennertium
+C ----------------------------------CELL CARD BLOCK-----------------------------
+1     0         -1        $ Spent fuel, initialized to a void
+2     1    -2.6 1 -2      $ Boral cylinder 
+3     2   -16.8 2 -3      $ Kennertium cylinder 
+99    0         -99 3     $ Outside kennertium cylinder inside bounding sphere
+999   0         99        $ Graveyard
+
+C ------------------------------SURFACE CARD BLOCK----------------------------- 
+1       rcc 0 -55 0 0 110 0 27.5          $ Fuel cylinder
+2       rcc 0 -88 0 0 176 0 60.5          $ Boral cylinder- neutron shield
+3       rcc 0 -115.5 0 0 231 0 88.0       $ Kennertium cylinder- gamma shield
+99        so 200  $ Bounding sphere for graveyard
+
+C ----------------------------------DATA CARD BLOCK---------------------------- 
+MODE N P
+SDEF POS= 0 0 0 ERG=D1 PAR=2    $ Photon source card                          
+SI1 L  0.026344 0.059540 0.06312  0.093614 0.109779                            
+      0.118189 0.130522 0.177213 0.197956 0.261077                            
+      0.295956 0.307735 0.308455 0.316506 0.320082                            
+      0.468068 0.604411 0.612462 0.661657 0.661657 1.173228                   
+SP1    0.005 0.081 0.026 0.002 0.01 0.001 0.007 0.013 0.021 0.001 0.034        
+       0.006 0.035 0.097 0.009 0.056 0.01 0.006 0.11 0.11 0.17                 
+M1    5010.70c         -0.0100  $ Boral (Aluminum 10% Boron Alloy).
+      5011.70c          -.0801
+      11023.70c        -0.005 
+      13027.70c        -0.879 
+      14000.60c        -0.0025 
+      19000.66c        -0.01 
+      22000.66c        -0.0005 
+      26000.50c        -0.003 
+M2    28000.50c        -0.09  $ Kennertium. Density = 16.800000
+      29000.50c        -0.15 
+      74000.55c        -0.76 
+IMP:N   1 3r         0    $  3R repeats the previous importance 3 times1, 999
+IMP:P   1 3r         0             $ 1, 999
+VOL    2.61341E5       3.41E5       2.08E5       3.35e+007     $ 1, 99
+C SDEF  POS= 0 0 0 ERG=D2 PAR=1   $ Neutron source card                           
+C SP2   -3 0.887353 3.89176
+C F15:P 0 0 172 1
+C E15 2.47E-03 6E-03 1E-1 1.5 2 
+C Fm15 2.13E13
+NPS   1E5
+CUT:p j 0.075
+PHYS:P 0 1 1 0 1
+PRINT
