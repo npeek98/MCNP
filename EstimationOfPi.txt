@@ -1,0 +1,36 @@
+NE361 Pi Estimate Using MCNP
+C Date: 01MAR19
+C Made by: Nathaniel Peek
+C --------------------------------Cell Card Block------------------------------
+1     1 -0.00065 -1 2 (3 4)     $ Square cell
+2     1 -0.00065 -2 (3 4)       $ 1/4 of cylinder cell
+9     0          -99 #1 #2      $ Everything except cell 1 and cell 2
+99    0           99            $ Graveyard
+
+C -------------------------------Surface Card Block----------------------------
+C Square RPP - one side faces the beam and will be used for the tally
+1     RPP -5 5 -5 5 -5 5
+C Cylinder just inside the RPP (No overlapping planes) use one face for tally
+2     RCC 0 -4.99 0 0 9.98 0 4.99
+C Plane normal to z axis to reduce problem to 1/4 cylinder
+3     PZ 0
+C Plane normal to x axis to reduce problem to 1/4 cylinder
+4     PX 0
+C Bounding sphere
+99    SO 100
+
+C -------------------------------Data Card Block-------------------------------
+MODE  P
+IMP:P 1 1 1 0
+VOL   214.601 785.398 124663.706 $Volume of cells 1, 2, 3
+C Disk source to represent a beam of 1.0 MeV Photons directed at model:
+SDEF  POS=2.5 7.0 2.5 AXS=0 1 0 EXT=0 RAD=d1 PAR=2 ERG=1.0
+      VEC=0 1 0 DIR=-1
+SI1    0 3.6 $Radius of disk
+SP1   -21 1
+C Surface tally for calculation of Pi
+F11:P 1.3 2.2 $If you don't know which surface, can check in vised
+FC11 Calculate pi by taking ratio of results of (2.2/1.3) x 4
+M1    2004.70c 1.0 $ Helium- because it won't stop anything
+NPS 1E7
+PRINT
